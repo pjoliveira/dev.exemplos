@@ -1,0 +1,284 @@
+#include 'protheus.ch'
+#include 'parmtype.ch'
+#include 'totvs.ch'
+#include 'msobject.ch'
+#include 'fileio.ch'
+ 
+/*/{Protheus.doc} zArquivo 
+@description Classe salvar/deletar arquivos com qualquer extensão no remote e no servidor.               
+@author       Súlivan Símões Silva - ( Linkedin: https://br.linkedin.com/in/s%C3%BAlivan-sim%C3%B5es-38a963148 )
+@version     1.0
+@see    Links Totvs
+            01 - https://tdn.totvs.com/display/tec/Encapsulamento+-+Modificador+de+Acesso
+            02 - https://tdn.totvs.com/pages/viewpage.action?pageId=6063065
+            03 - https://tdn.totvs.com/display/tec/Tipagem+de+Dados
+/*/
+Class zArquivo
+ 
+    Private Data cDirOrig     As Character
+    Private Data cDirDest     As Character
+    Private Data cExtensao    As Character
+    Private Data cNomeArquivo As Character
+    Private Data lComprime    As Logical  
+    Private Data lSalvou      AS Logical 
+    Private Data aExtensoes   AS Array
+     
+    //Construtor
+    Public Method New()    Constructor        
+     
+    //Getters    
+    Private Method isSalvou()              As Logical
+    Public  Method getDiretorioOrigem()     As Character
+    Public  Method getDiretorioDestino() As Character
+    Public  Method getExtensaoArquivo()  As Character
+    Public  Method getNomeArquivo()      As Character 
+    Public  Method isComprime()          As Logical
+    Public  Method getExtensoesValidas() As Array
+         
+    //Setters
+    Private Method setSalvou(lSalvou As Logical)               As Undefinied
+    Private Method setExtensao(cExtensao As Character)           As Undefinied    
+    Public  Method setDiretorioOrigem(cDirOrig As Character)  As Undefinied
+    Public  Method setDiretorioDestino(cDirDest As Character) As Undefinied
+    Public  Method setNomeArquivo(cNomeArquivo As Character)  As Logical 
+    Public  Method setComprime(lComprime As Logical)          As Undefinied
+    Public  Method addExtensoesValidas(aExtensoes As Array)      As Undefinied
+     
+    //Outros Métodos
+    Public Method isExtensaoValida()     As Logical  
+    Public Method salvaArquivoServidor() As Logical
+    Public Method removeArquivo(cArquivo As Character)  As Logical      
+EndClass
+ 
+/*/{Protheus.doc} Constructor 
+@description Construtor da classe
+@author      Súlivan
+/*/
+Method New() Class zArquivo As Object 
+ 
+    ::setDiretorioOrigem("")
+    ::setDiretorioDestino("")
+    ::setExtensao("")
+    ::setNomeArquivo("")
+    ::setComprime(.T.)
+    ::setSalvou(.F.)
+     
+Return Self
+ 
+/*/{Protheus.doc} isSalvou 
+@description Retorna se o arquivo já foi salvo ou não.
+@author      Súlivan
+@return     Logical, .T. caso já tenha sido salvo e .F. caso contrário
+/*/
+Method isSalvou() Class zArquivo As Logical  
+Return ::lSalvou
+ 
+/*/{Protheus.doc} getDiretorioOrigem 
+@description Retorna o diretório de origem do arquivo.
+@author      Súlivan
+@return     Character, diretório origem.
+/*/
+Method getDiretorioOrigem() Class zArquivo As Character
+Return ::cDirOrig
+ 
+/*/{Protheus.doc} getDiretorioDestino 
+@description Retorna o diretório de destino do arquivo
+@author      Súlivan
+@return     Character, diretório destino.
+/*/
+Method getDiretorioDestino() Class zArquivo As Character
+Return ::cDirDest
+ 
+Method getExtensaoArquivo() Class zArquivo As Character
+Return ::cExtensao
+ 
+/*/{Protheus.doc} getNomeArquivo 
+@description Retorna o nome que o arquivo possui
+@author      Súlivan
+@return     Character, nome do arquivo
+/*/
+Method getNomeArquivo() Class zArquivo As Character 
+Return ::cNomeArquivo
+ 
+/*/{Protheus.doc} isComprime 
+@description Retorna se no momento de envio do arquivo para o servidor
+             ele deve ser comprimido antes. [Só é usado no método salvaArquivoServidor]
+@author      Súlivan
+@return     Logical, .T. caso seja para comprimir, .F. caso contrário
+/*/
+Method isComprime() Class zArquivo As Logical
+Return ::lComprime
+ 
+/*/{Protheus.doc} getExtensoesValidas 
+@description Retorna todas as extensões que são válidas (poderão ser salvas)
+@author      Súlivan
+@return     Array, extensões que podem ser salvas
+/*/
+Method getExtensoesValidas() Class zArquivo As Array
+Return ::aExtensoes
+ 
+ 
+/*/{Protheus.doc} setSalvou 
+@description Flag indicando se arquivo já foi salvo ou não.
+@author      Súlivan
+@param         lSalvou, .T. caso arquivo já tenha sido salvo .F. caso contrário
+@return     Undefinied
+/*/
+Method setSalvou(lSalvou) Class zArquivo As Undefinied
+    ::lSalvou := lSalvou    
+Return
+ 
+/*/{Protheus.doc} setExtensao 
+@description Altera propriedade que contém a extensão do arquivo origem
+@author      Súlivan
+@param         Character, extensão do arquivo.
+@return     Undefinied
+/*/
+Method setExtensao(cExtensao) Class zArquivo As Undefinied    
+    ::cExtensao := cExtensao
+Return
+ 
+/*/{Protheus.doc} setDiretorioOrigem 
+@description Altera propriedade que contém diretório origem
+@author      Súlivan
+@param         Character, diretório origem.
+@return     Undefinied
+/*/ 
+Method setDiretorioOrigem(cDirOrig) Class zArquivo As Undefinied
+     
+    ::cDirOrig := cDirOrig
+    ::setExtensao(Lower(Right(Alltrim(::cDirOrig),4)))
+Return 
+ 
+/*/{Protheus.doc} setDiretorioDestino 
+@description Altera propriedade que contém diretório destino do arquivo
+@author      Súlivan
+@param         Character, diretório destino (incluindo o nome e extensão do arquivo).
+@return     Undefinied
+/*/
+Method setDiretorioDestino(cDirDest) Class zArquivo As Undefinied
+    ::cDirDest := cDirDest
+Return 
+ 
+/*/{Protheus.doc} setNomeArquivo 
+@description Altera o nome do arquivo origem antes de ser copiado
+@author      Súlivan
+@param         Caractér, diretório destino (incluindo o nome e extensão do arquivo).
+@return     Logical, .T. caso tenha conseguido alterar o nome, .F. caso contrário.
+/*/
+Method setNomeArquivo(cNomeArquivo) Class zArquivo As Logical 
+     
+    Local nRet          := -1
+    Local cDirOrigem := ""
+    Local aDirOrigem := {}
+    Local nIndice    := 0
+     
+    If !(::isSalvou())
+         
+        ::cNomeArquivo := cNomeArquivo
+                         
+        aDirOrigem := StrTokArr2( ::getDiretorioOrigem(), "\")
+        For nIndice := 1 To Len(aDirOrigem)-1 
+            cDirOrigem += aDirOrigem[nIndice]+"\"
+        Next
+        cDirOrigem += ::getNomeArquivo() + ::getExtensaoArquivo()
+         
+        If( !Empty(Alltrim(::getNomeArquivo())) )
+         
+            nRet := fRename( ::getDiretorioOrigem(), cDirOrigem )
+            If(nRet != -1)
+                ::setDiretorioOrigem(cDirOrigem)
+            Else
+                ConOut("<zArquivo>[alteraNomeArquivo] - FError -> "+FError() )
+            Endif
+        Endif
+         
+    Endif
+Return Iif(nRet == -1,.F., .T.) 
+ 
+/*/{Protheus.doc} setComprime 
+@description Altera propriedade que contém a propriedade que define se arquivo deve ou não 
+             ser comprmido antes de ser copiado.[Só é usado no método salvaArquivoServidor]
+@author      Súlivan
+@param         Logical, .T. caso deve ser comprimido .F. caso contrário
+@return     Undefinied
+/*/
+Method setComprime(lComprime) Class zArquivo As Undefinied
+    ::lComprime := lComprime    
+Return 
+ 
+/*/{Protheus.doc} addExtensoesValidas 
+@description Adiciona quais extensões poderão ser salvas
+@author      Súlivan
+@param         Array, Array contendo extensões válidas exemplo {".mp4",".pdf",".jpg"}
+@return     Undefinied
+/*/
+Method addExtensoesValidas(aExtensoes) Class zArquivo As Undefinied
+     
+    Local nIndice:=0
+     
+    ::aExtensoes := Iif( ValType(::aExtensoes)=="A",::aExtensoes,{})    
+    If( ValType(aExtensoes) == "A" )        
+        For nIndice := 1 To Len(aExtensoes)
+            Aadd(::aExtensoes,aExtensoes[nIndice])
+        Next
+    Endif
+Return 
+  
+/*/{Protheus.doc} isExtensaoValida 
+@description Retorna se extensão do arquivo é válida ou não. 
+@author      Súlivan
+@return     Logical, .T. se extensão for válida, .F. caso contrário
+/*/
+Method isExtensaoValida() Class zArquivo As Logical  
+ 
+    Local nIndice := 0
+    Local lValida := .F.
+     
+    For nIndice := 1 To Len(::getExtensoesValidas())
+        If(::getExtensoesValidas()[nIndice] == ::getExtensaoArquivo())
+            lValida := .T.
+            exit
+        Endif
+    Next
+         
+Return lValida
+ 
+/*/{Protheus.doc} salvaArquivoServidor 
+@description Salva arquivo no diretório destino localizado no Servidor. 
+             Diretório precisa estar na raiz do Protheus_data. Exemplo \temp\
+@author      Súlivan
+@return     Logical, .T. caso arquivo tenha sido salvo com sucesso, .F. caso contrário.
+/*/
+Method salvaArquivoServidor() Class zArquivo As Logical 
+                 
+    If( !Empty(::getDiretorioOrigem()) .AND. !Empty(::getDiretorioDestino()) )
+         
+        If( ::isExtensaoValida() )
+                         
+            ::setSalvou( CpyT2S( ::getDiretorioOrigem() ,; 
+                                 ::getDiretorioDestino(),;
+                                 ::isComprime()          ;
+                               ))        
+        Endif
+                 
+    Endif
+             
+Return ::isSalvou()
+ 
+/*/{Protheus.doc} removeArquivo 
+@description Deleta arquivo no diretório 
+@author      Súlivan
+@param        Character, diretório + nome do arquivo + extensao do arquivo a ser deletado.
+@return     Logical, .T. caso arquivo tenha sido deletado com sucesso, .F. caso contrário.
+/*/
+Method removeArquivo(cArquivo) Class zArquivo As Logical 
+     
+    Local   nRet      := -1
+    Default cArquivo := ""
+     
+    nRet := Ferase( cArquivo ) 
+    If ( nRet == -1 )
+        Conout("<zArquivo>[removeArquivo] - Falha na deleção do arquivo - "+FError())
+    Endif
+Return Iif(nRet == -1, .F., .T. )

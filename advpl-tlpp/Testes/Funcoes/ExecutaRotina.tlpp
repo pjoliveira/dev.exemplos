@@ -1,0 +1,42 @@
+#include "totvs.ch"
+//=====================================================================================
+// ExecutaRotina - PJ Oliveira - Janeiro 2022
+//-------------------------------------------------------------------------------------
+//Descrição
+// executando as qualquer rotina indicada no get
+//-------------------------------------------------------------------------------------
+//Parametros
+// nil
+//-------------------------------------------------------------------------------------
+//Retorno
+// nil
+//=====================================================================================
+
+NAMESPACE custom.testedefuncoes.ExecutaRotina
+
+User Function ExecFun()
+
+local oBtBusca := Nil
+Local oDlg1    := Nil
+Local oGet     := Nil
+Private cGet := Space(200)
+	
+	DEFINE MSDIALOG oDlg1 FROM 000,000 TO 150, 400 PIXEL TITLE "Executar"
+
+		oGet     := TGet()   :New(10, 10, bSETGET(cGet), oDlg1, 130                  , 10 , "@!", {|| }, , ,    , , , .T., , , , , , , .F., , ,)
+		
+		oBtBusca := tButton():New(25, 10, "Executar"   , oDlg1, {|| FSExecuta(cGet) }, 030, 012 ,      , , , .T.)
+		
+	ACTIVATE MSDIALOG oDlg1
+	
+Return()
+
+Static Function FSExecuta(cGet)
+
+ If !Empty(cGet)
+	//	TRYEXCEPTION
+			xConteudo := &(AllTrim(cGet))
+	//	ENDEXCEPTION
+	EndIf
+	
+Return()
