@@ -1,0 +1,51 @@
+#include "totvs.ch"
+//=====================================================================================
+// FWExcelTeste - PJ Oliveira - Fevereiro 2022
+//-------------------------------------------------------------------------------------
+//Descrição
+// chamando a classe ExcelTeste.Planilha
+//-------------------------------------------------------------------------------------
+//Parametros
+// nil
+//-------------------------------------------------------------------------------------
+//Retorno
+// nil
+//=====================================================================================
+
+NAMESPACE pjoliveira.ExcelTeste
+
+USING NAMESPACE pjoliveira.ExcelTeste.PlanilhaClass
+
+User Function FWExcelTeste()
+    Local bProcessa := nil
+    Local oPlanExcel := PlanilhaClass():New()
+
+    bProcessa := {|| oPlanExcel:GetPlan() }
+    Processa( bProcessa,"Gerando a planilha...", "Aguarde !" )
+
+    //Local oExcel := FWMSEXCEL():New()
+    // oExcel:AddworkSheet("Teste - 1")
+    // oExcel:AddTable ("Teste - 1","Titulo de teste 1")
+    // oExcel:AddColumn("Teste - 1","Titulo de teste 1","Col1",1,1)
+    // oExcel:AddColumn("Teste - 1","Titulo de teste 1","Col2",2,2)
+    // oExcel:AddColumn("Teste - 1","Titulo de teste 1","Col3",3,3)
+    // oExcel:AddColumn("Teste - 1","Titulo de teste 1","Col4",1,1)
+    // oExcel:AddRow("Teste - 1","Titulo de teste 1",{11, 12, 13, 14})
+    // oExcel:AddRow("Teste - 1","Titulo de teste 1",{21, 22, 23, 24})
+    // oExcel:AddRow("Teste - 1","Titulo de teste 1",{31, 32, 33, 34})
+    // oExcel:AddRow("Teste - 1","Titulo de teste 1",{41, 42, 43, 44})
+    // oExcel:AddworkSheet("Teste - 2")
+    // oExcel:AddTable("Teste - 2","Titulo de teste 1")
+    // oExcel:AddColumn("Teste - 2","Titulo de teste 1","Col1",1)
+    // oExcel:AddColumn("Teste - 2","Titulo de teste 1","Col2",2)
+    // oExcel:AddColumn("Teste - 2","Titulo de teste 1","Col3",3)
+    // oExcel:AddColumn("Teste - 2","Titulo de teste 1","Col4",1)
+    // oExcel:AddRow("Teste - 2","Titulo de teste 1",{11, 12, 13, stod("20121212")})
+    // oExcel:AddRow("Teste - 2","Titulo de teste 1",{21, 22, 23, stod("20121212")})
+    // oExcel:AddRow("Teste - 2","Titulo de teste 1",{31, 32, 33, stod("20121212")})
+    // oExcel:AddRow("Teste - 2","Titulo de teste 1",{41, 42, 43, stod("20121212")})
+    // oExcel:AddRow("Teste - 2","Titulo de teste 1",{51, 52, 53, stod("20121212")})
+    // oExcel:Activate()
+    // oExcel:GetXMLFile("TESTE.xml")
+
+Return
