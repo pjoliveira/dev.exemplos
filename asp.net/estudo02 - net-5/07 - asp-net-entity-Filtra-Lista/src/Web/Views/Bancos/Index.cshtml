@@ -1,0 +1,104 @@
+﻿@model IEnumerable<ApplicationBusiness.CadastrosModels.Banco>
+
+@{
+    ViewData["Title"] = "Index";
+    ApplicationBusiness.CadastrosModels.Banco firstDados = Model.ToList().FirstOrDefault();
+}
+
+<h1>Index</h1>
+
+<!-- Formulario para filtrar a lista -->
+<form asp-area=""
+      asp-controller="Bancos"
+      asp-action="Index"
+      asp-anti-forgery="false"
+      method="get">
+
+    <!-- caontainer Grid do bootstrap -->
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-sm">
+                <!-- Botão para cadastrar um novo registro-->
+                <a class="btn btn-success" asp-action="Create">  Adicionar  </a>
+            </div>
+
+            <div class="col-sm">
+
+                <div class="input-group mb-3">
+
+                    <!-- Label para o SelectCampo -->
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputSelectCampo">Selecionar:</label>
+                    </div>
+
+                    <!-- Select para selecionar o campo para filtra a lista -->
+                    <select class="custom-select" id="filtroParam" asp-items="ViewBag.Filtros" name="filtroParam" >
+                    </select>
+                    
+                    <!-- input text para digitar o textodo do filtro da lista -->
+                    <input type="text" class="form-control" name="valorParam" placeholder="Filtrar por..." aria-label="Filtrar por..." aria-describedby="basic-addon2" value="@ViewBag.CurrentValor">
+
+                    <!-- Buttom para enviar os dados do filtro para a lista -->
+                    <button type="submit" class="btn btn-outline-secondary"> Filtrar  </button>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+
+                <label asp-for="@firstDados.Codigo"></label>
+                
+            </th>
+            <th>
+
+                <label asp-for="@firstDados.Nome"></label>
+
+            </th>
+            <th>
+
+                <label asp-for="@firstDados.Fantasia"></label>
+
+            </th>
+            <th>
+
+                <label asp-for="@firstDados.EmpresaId"></label>
+
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Codigo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fantasia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmpresaId)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Codigo">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Codigo">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Codigo">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

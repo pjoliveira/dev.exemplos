@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ApplicationBusiness.CadastrosModels.Banco>
+<div>
+    <br />
+    <p class="text-right"><strong>Registros encontrados: @Model.Count().ToString("N0").Replace(',', '.')</strong></p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Codigo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fantasia)
+            </th>
+
+            <th>
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Codigo)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Nome)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Fantasia)
+    </td>
+    <td>
+        <button class="btn btn-primary details" data-id="@item.Codigo">Ver <i class="fas fa-eye"></i></button>
+    </td>
+</tr>}
+
+    </table>
+
+    <div id="modal" class="modal fade" />
+</div>
+
+<script>
+
+    $(function () {
+            $(".details").click(function () {
+                var id = $(this).attr("data-id");
+                $("#modal").load("/testes/details?id=" + id, function () {
+                    $("#modal").modal();
+                })
+            });
+    })
+
+</script>

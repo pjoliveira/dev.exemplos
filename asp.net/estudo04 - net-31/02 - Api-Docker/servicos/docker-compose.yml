@@ -1,0 +1,19 @@
+version: "3"
+services: 
+    bancosapi:
+        build: ../src/Bancos/.
+        # image: apibancos
+        container_name: api-bancos
+        hostname: dev-bancosapi
+        ports: 
+            - "8001:80"
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production 
+
+
+
+
+networks:
+    default:
+        external: true
+        name: netdev    

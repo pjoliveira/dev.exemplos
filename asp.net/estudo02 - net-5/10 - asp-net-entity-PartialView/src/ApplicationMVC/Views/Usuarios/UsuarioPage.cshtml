@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "UsuarioPage";
+}
+
+    <center>
+        <h2>Seja bem-vindo Sr(a). @User.Identity.Name  </h2>
+        <br>
+        <br>
+
+        <a class="btn btn-dark" asp-area="" asp-controller="Usuarios" asp-action="Logoff">Realizar o logoff </a>
+    </center>

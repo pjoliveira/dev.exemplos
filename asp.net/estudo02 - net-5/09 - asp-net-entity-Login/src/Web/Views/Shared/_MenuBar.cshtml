@@ -1,0 +1,47 @@
+﻿<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container">
+
+        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">WEBAPP</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+
+                <!--CADASTROS-->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Cadastros
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="Index">Clientes</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Bancos" asp-action="Index">Bancos</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Classes" asp-action="Index">Classes</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Contato" asp-action="Index">Contato Tel.</a>
+                    </div>
+                </li>
+                <!--===============================================================================================-->
+                <!--PARAMETROS-->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Parâmetros
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Paises" asp-action="Index">Países</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Estados" asp-action="Index">Estados</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Municipios" asp-action="Index">Municípios</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuários</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="LoginPage">Login</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="LogoffPage">Logoff</a>
+                    </div>
+                </li>
+                <!--===============================================================================================-->
+
+            </ul>
+        </div>
+    </div>
+</nav>
