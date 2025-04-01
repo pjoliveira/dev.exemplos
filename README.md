@@ -7,11 +7,11 @@ Aqui você encontrará uma variedade de projetos nos quais venho usando para apr
 ### 📚 Sobre este repositório
 Este repositório é uma coleção dos meus estudos em desenvolvimento de software, contém: 
 - Projetos práticos que desenvolvi para aplicar e consolidar meus conhecimentos.
-- Resumos e anotações dos cursos e livros que estudei.
+- Resumos e anotações de cursos e livros.
 - Experimentos com novas tecnologias e ferramentas.
   
-### 🌱 O que estou aprendendo
-Atualmente, estou aprimoranfo meus conhecimentos e você encontrará alguns estudos sobre esses tópicos:
+### 🌱 O que tem no respositório
+Atualmente você encontrará alguns estudos desenvolvidos sobre esses tópicos:
 - C#,
 - ASP .Net Core,
 - Web API,
